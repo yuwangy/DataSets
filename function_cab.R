@@ -6,3 +6,9 @@ arrange(Cab_Data, 'Data of Travel')
 figure1 <- select(Cab_Data, Company,'KM Travelled', 'Price Charged')
 figure1
 select(figure1, Company, starts_with("Yellow Cab"))
+Cab_Data
+
+#. group and summarize
+Cab_Data %>%
+  group_by(Company) %>%
+  summarize(mn = mean(`Price Charged`), na.rm = TRUE)
