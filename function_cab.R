@@ -12,3 +12,10 @@ Cab_Data
 Cab_Data %>%
   group_by(Company) %>%
   summarize(mn = mean(`Price Charged`), na.rm = TRUE)
+
+figure2 <- ggplot(Cab_Data, aes(x = `KM Travelled`, y = `Price Charged`)) +
+  geom_bar(stat = "identity") +
+  xlab("KM travelled by cab") +
+  ylab("Price charged to customoers")
+
+figure2
