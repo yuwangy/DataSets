@@ -1,3 +1,6 @@
+# load libraries
+library(tidyverse)
+
 # Load the dataset
 cab_data <- read.csv("https://raw.githubusercontent.com/yuwangy/DataSets/main/Cab_Data.csv")
 
@@ -22,5 +25,26 @@ hist(cab_data$Price.Charged, breaks = 20, xlab = "Price Charged", main = "Histog
 
 # Create a scatterplot of distance traveled vs. price charged
 plot(cab_data$KM.Travelled, cab_data$Price.Charged, xlab = "Distance Traveled", ylab = "Price Charged", main = "Scatterplot of Distance Traveled vs. Price Charged")
+
+# Check missing value
+sum(is.na(cab_data))
+
+# summary for key numeric values
+summary(cab_data$KM.Travelled, cab_data$Price.Charged, cab_data$Cost.Of.Trip)
+
+library(ggplot2)
+
+ggplot(cab_data, aes(x = KM.Travelled)) +
+  geom_histogram(bins = 50, fill = "blue") +
+  labs(x = "Distance Travelled (km)", y = "Count") +
+  ggtitle("Distribution of Distance Travelled") +
+  theme_minimal()
+
+ggplot(cab_data, aes(x = Price.Charged)) +
+  geom_histogram(bins = 50, fill = "blue") +
+  labs(x = "Price Charged ($)", y = "Count") +
+  ggtitle(("Disbribution of Price Charged")) +
+  theme_minimal()
+
 
 
