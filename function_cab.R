@@ -25,7 +25,9 @@ figure2
 
 Cab_Data %>%
   group_by(Company, `Price Charged`) %>%
-  summarize(profit = sum(`Price Charged`))
+  summarize(profit = sum(`Price Charged`)) %>%
+  spread('Price Charged', profit)
+
 
 
 
