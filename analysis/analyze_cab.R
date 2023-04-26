@@ -110,4 +110,11 @@ ggplot(yellow_profit, aes(x = year, y = profit)) +
   labs(title = "Yellow Cab Yearly Profits", x = "Year", y = "Profit")
 
 
+# plot line chart
+ggplot(yearly_profit, aes(x = year, y = profit, color = Company, group = Company)) +
+  geom_line() +
+  labs(title = "Yearly Profits Comparison", x = "Year", y = "Profit") +
+  theme_minimal()
+
+
 
