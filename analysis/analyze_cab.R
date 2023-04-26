@@ -46,5 +46,37 @@ ggplot(cab_data, aes(x = Price.Charged)) +
   ggtitle(("Disbribution of Price Charged")) +
   theme_minimal()
 
+# Filter data for Pink Cab and Yellow Cab
+pink_cab_data <- cab_data[cab_data$Company == "Pink Cab",]
+yellow_cab_data <- cab_data[cab_data$Company == "Yellow Cab",]
+
+
+
+
+
+
+
+library(dplyr)
+
+# Create a new data frame with the relevant columns
+profits <- cab_data %>%
+  select(Company, Price.Charged, Cost.of.Trip) 
+
+# Calculate profits for each company
+pink_cab_data$profit <- pink_cab_data$Price.Charged - pink_cab_data$Cost.of.Trip
+yellow_cab_data$profit <- yellow_cab_data$Price.Charged - yellow_cab_data$Cost.of.Trip
+
+# Calculate total profits for each company
+total_pink_cab_profit <- sum(pink_cab_data$profit)
+total_yellow_cab_profit <- sum(yellow_cab_data$profit)
+
+# Print the total profits made by each company
+cat("Total profit made by Pink Cab: $", round(total_pink_cab_profit, 2), "\n")
+cat("Total profit made by Yellow Cab: $", round(total_yellow_cab_profit, 2), "\n")
+
+# Plot a bar chart to compare profits
+library(ggplot2)
+cab_profit <- data.frame(Company=c("Pink Cab", "Yellow Cab"), Profit=c(total_pink_cab_profit, total_yellow_cab_profit))
+ggplot(cab_profit, aes(x=Company, y=Profit, fill=Company)) + geom_bar(stat="identity") + ggtitle("Comparison of profits made by Pink Cab and Yellow Cab")
 
 
