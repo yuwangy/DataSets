@@ -1,5 +1,7 @@
 # load libraries
 library(tidyverse)
+library(dplyr)
+library(lubridate)
 
 # Load the dataset
 cab_data <- read.csv("https://raw.githubusercontent.com/yuwangy/DataSets/main/Cab_Data.csv")
@@ -77,6 +79,35 @@ cat("Total profit made by Yellow Cab: $", round(total_yellow_cab_profit, 2), "\n
 # Plot a bar chart to compare profits
 library(ggplot2)
 cab_profit <- data.frame(Company=c("Pink Cab", "Yellow Cab"), Profit=c(total_pink_cab_profit, total_yellow_cab_profit))
-ggplot(cab_profit, aes(x=Company, y=Profit, fill=Company)) + geom_bar(stat="identity") + ggtitle("Comparison of profits made by Pink Cab and Yellow Cab")
+ggplot(cab_profit, aes(x=Company, y=Profit, fill=Company)) + geom_bar(stat="identity") + 
+  ggtitle("Profits: Pink Cab v.s Yellow Cab")
+
+
+# Create a new data frame with columns for the year, cab company, and profit
+library(lubridate)
+
+cab_data$Date <- as.Date(cab_data$Date, origin = "1899-12-29")
+
+
+yearly_profit <- cab_data %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"), 
+         year = year(Date)) %>% 
+  group_by(year, Company) %>%
+  summarize(profit = sum(Price.Charged - Cost.of.Trip))
+
+# Create bar chart for Pink Cab yearly profits
+pink_profit <- yearly_profit %>%
+  filter(Company == "Pink Cab")
+ggplot(pink_profit, aes(x = year, y = profit)) +
+  geom_col(fill = "pink", color = "black") +
+  labs(title = "Pink Cab Yearly Profits", x = "Year", y = "Profit")
+
+# Create bar chart for Yellow Cab yearly profits
+yellow_profit <- yearly_profit %>%
+  filter(Company == "Yellow Cab")
+ggplot(yellow_profit, aes(x = year, y = profit)) +
+  geom_col(fill = "yellow", color = "black") +
+  labs(title = "Yellow Cab Yearly Profits", x = "Year", y = "Profit")
+
 
 
