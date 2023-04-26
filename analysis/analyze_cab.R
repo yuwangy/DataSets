@@ -58,7 +58,7 @@ yellow_cab_data <- cab_data[cab_data$Company == "Yellow Cab",]
 
 library(dplyr)
 
-# Create a new data frame with the relevant columns
+# Create a new data frame with the relevant column: profit
 profits <- cab_data %>%
   select(Company, Price.Charged, Cost.of.Trip) 
 
