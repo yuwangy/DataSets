@@ -36,3 +36,19 @@ ggplot(yellow_cab_trips, aes(x = Month, y = total_trips)) +
   xlab("Month") +
   ylab("Number of Trips")
 
+
+# Calculate the number of trips per month for each company
+trips_per_month <- cab_data %>%
+  group_by(Company, Month) %>%
+  summarize(total_trips = n())
+
+# Plot the number of trips per month for each company
+ggplot(trips_per_month, aes(x = Month, y = total_trips, color = Company)) +
+  geom_line() +
+  ggtitle("Number of Trips per Month") +
+  xlab("Month") +
+  ylab("Number of Trips") +
+  scale_color_manual(values = c("pink", "yellow"))  # Set colors for each company
+
+
+
